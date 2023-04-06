@@ -1,0 +1,49 @@
+% !TEX root = ../../../main.tex
+
+\section{\autoref{chapter-it-sicherheit}, \nameref{chapter-it-sicherheit}}
+
+\subsection*{\ref{section-aufgaben-it-sicherheit} \nameref{section-aufgaben-it-sicherheit}}
+
+\begin{enumerate}
+
+\item \textbf{Lösungsvorschlag}:\\
+
+Bei der Computer Safety geht es um den \textbf{Schutz} vor \textbf{unbeabsichtigten Schäden} \\  (z.B. \textbf{Verschleiss}). Eine Schutzmassnahme kann zum Beispiel \textbf{regelmässige, automatisierte Backups der Daten} sein. Die Computer Security widmet sich im Gegensatz dazu, wie \textbf{Sicherheit} vor \textbf{absichtlichen Störungen} gewährleistet werden kann. Wir sprechen auch von \textbf{beabsichtigten Angriffen} (z.B. \textbf{Ransomware}) gegen ein \ac{IT}-System. Die \textbf{Computer Security} unterteilen wir in zwei Gebiete: die Sicherheit einzelner Computer und die Netzwerksicherheit. Die \textbf{Authentifizierung} und \textbf{Autorisierung} sind die zentralen Prozesse, wenn es darum geht den persönlichen Computer vor dem Zugang und Zugriff von Unberechtigten zu schützen. Bei der Netzwerksicherheit geht es um die \textbf{Datensicherheit} in einem Netzwerk. Die \textbf{Abhörsicherheit} und \textbf{Zurechenbarkeit} spielen dabei eine wichtige Rolle. Genau darum kümmert sich die \textbf{Kryptologie}.\\
+
+\item \textbf{Lösungsvorschlag}:
+
+\begin{enumerate}
+\item Computerwurm aus dem Jahr 2000, welcher sich via E-Mail verbreitete. Der Wurm konnte nur unter Windows ausgeführt werden. Beim Ausführen des Wurms wurde Microsoft Outlook benötigt. Einmal ausgeführt, versendete sich der Computerwurm selbstständig an alle Kontakte der betroffenen Person mit einer E-Mail. Die Verbreitung war rasant und es kam zu einer Überlastung von Mail-Servern.
+
+\item Dieser Computerwurm aus dem Jahr 2004 verbreitete sich \textbf{nicht} via E-Mail. Der Wurm war nur unter Windows aktiv und hat sich automatisch auf den Computer kopiert, sobald der Benutzer sich mit dem Internet verbunden hatte. Dies war durch eine Sicherheitslücke in einem Windows-Systemdienst möglich (Local Security Authority Subsystem Service (LSASS)). Der Computerwurm hat dann in unregelmässigen Abständen den Computer automatisch heruntergefahren.
+
+\item Über eine Sicherheitslücke hat sich dieser Computerwurm im Jahr 2017 auf Windows-Computern verbreitet. Der Wurm verschlüsselt dann die Benutzerdateien des Computers und fordert mittels Erpressung eine Anzahl Bitcoins an (Lösegeld). Erst dann wird der Schlüssel zur Entschlüsselung preisgegeben (Ransomware).
+
+\end{enumerate}
+
+\newpage
+
+\item \textbf{Lösungsvorschlag}:
+
+\begin{forest}
+[IT-Sicherheit
+	[Computer Safety]
+	[Computer Security
+		[Sicherheit einzelner Computer
+			[Zugangskontrolle (Authentifizierung)]
+			[Zugriffskontrolle (Autorisierung)]
+		]
+		[Netzwerksicherheit
+			[Datensicherheit
+				[Kryptologie
+					[Abhörsicherheit]
+					[Zurechenbarkeit]
+				]
+			]
+			[Firewalls]
+		]
+	]
+]
+\end{forest}
+
+\end{enumerate}

@@ -1,0 +1,88 @@
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{public_key}
+\chapterimagetitle{PUBLIC KEY}
+\chapterimageurl{https://xkcd.com/1553/}
+\chapterimagehover{I guess I should be signing stuff, but I've never been sure what to sign. Maybe if I post my private key, I can crowdsource my decisions about what to sign.}
+
+\chapter{Asymmetrische Kryptographie}
+\label{chapter-asymmetrische-kryptographie}
+
+Bei der symmetrischen Kryptographie gibt es einen Schlüssel. In einem symmetrischen Kryptosystem wird der gleiche Schlüssel zum Verschlüsseln und Entschlüsseln benutzt. Beide Parteien müssen also einen gemeinsamen, geheimen Schlüssel bestimmen. Bis zur Publikation des Papers \say{New Directions in Cryptography} (1976)\footnote{\url{https://ee.stanford.edu/~hellman/publications/24.pdf}} von Diffie und Hellman war eine Alternative zu symmetrischen Kryptosystemen überhaupt nicht denkbar. Die Erkenntnisse aus diesem Paper ermöglichte es anderen Forschern, asymmetrische Kryptosysteme zu erstellen.
+
+\newcommand{\asymmetrischeKryptographieLernziele}{
+\protect\begin{todolist}
+\item Sie beschreiben die Anwendungen der asymmetrischen Kryptographie.
+\item Sie erklären, das Kommunikationsszenario in einem asymmetrischen Kryptosystem.
+\item Sie vergleichen das Prinzip von symmetrischen und asymmetrischen Kryptosystemen.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-asymmetrische-kryptographie}, \nameref{chapter-asymmetrische-kryptographie}}{\protect\asymmetrischeKryptographieLernziele}
+
+\asymmetrischeKryptographieLernziele
+
+\section{Grundlagen}
+
+In der asymmetrischen Kryptographie ändert sich das Kommunikationsszenario. Jeder Kommunikationsteilnehmer besitzt ein Schlüsselpaar, bestehend aus \textbf{zwei Schlüsseln}: der \textbf{öffentliche Schlüssel} und der \textbf{private Schlüssel}. Deswegen wird die asymmetrische Kryptographie auch \textbf{Public-Key-Kryptographie} genannt. Die asymmetrische Kryptographie hat zahlreiche Anwendungen. Wir befassen uns in den nachfolgenden Kapiteln mit den folgenden Anwendungen:
+
+\begin{itemize}
+	\item Asymmetrische Kryptosysteme: Verschlüsselungsverfahren und Entschlüsselungsverfahren
+	\item Digitale Signaturen: Verfahren zur Überprüfung der Echtheit eines Dokuments oder einer Nachricht und der Identität des Autors.
+\end{itemize}
+
+Die Grundlage der Public-Key-Kryptographie ist das Konzept einer Einwegfunktion mit Falltür (eng. trapdoor one-way function). Der private Schlüssel ist die Falltür, das Geheimnis, mit der man die Umkehrfunktion effizient berechnen kann. Besitzt man die Falltür nicht, dann ist die Umkehrung der Funktion nicht effizient machbar.
+
+\section{Asymmetrische Kryptosysteme}
+
+Möchte Alice einen Klartext verschlüsseln und an Bob senden, dann kann Sie ein asymmetrisches Kryptosystem verwenden (z.B. \texttt{RSA}). Dazu muss Sie zum Verschlüsseln den öffentlichen Schlüssel von Bob benutzen und Bob zum Entschlüsseln seinen privaten Schlüssel.
+
+\begin{itemize}
+	\item \textbf{Öffentlicher Schlüssel (public key)}: Wird an die \textbf{anderen} Kommunikationsteilnehmer öffentlich verteilt. Jeder kann diesen Schlüssel verwenden, um einen Klartext zu verschlüsseln.
+	\item \textbf{Privater Schlüssel (private key)}: Muss geheim gehalten werden. Damit kann man einen Kryptotext entschlüsseln, falls er mit dem passenden öffentlichen Schlüssel verschlüsselt wurde.
+\end{itemize}
+
+\autoref{figure-kommunikationsszenario-asymmetrische-kryptosysteme} zeigt wie Alice den Klartext verschlüsseln kann und Bob den Kryptotext entschlüsseln kann.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\node[inner sep=0pt] (alice) at (-6,0)
+    {\includegraphics[scale=0.25]{alice_tiny}};
+\node[text width=2cm, align=center] (sender) at (-5, 0) {Sender (Alice)};
+\node[inner sep=0pt] (bob) at (5,0)
+    {\includegraphics[scale=0.25]{bob_tiny}};
+\node[text width=2cm, align=left] (empfaenger) at (6.5, 0) {Empfänger (Bob)};
+
+\node [cloud, draw, cloud puffs=7, cloud puff arc=120, aspect=3, text width=2.5cm, align=center] (medium) at (0,-2.5) {\footnotesize Übertragungsmedium};
+
+\node[inner sep=0pt] (eve) at (-0.75,-6)
+    {\includegraphics[scale=0.25]{eve_tiny}};
+\node[text width=3cm, align=center] (pangreifer) at (0.75, -6) {Passiver Angreifer (Eve)};
+\draw[-latex, very thick] (-0.5, -3.5) to node[left, near end] {Kryptotext (Kopie)} (-0.5, -5.5);
+\draw[-latex, very thick] (0.5, -3.5) to node[right, near end] {$\text{key}_B^{\text{public}}$} (0.5, -5.5);
+
+\node[rectangle, fill=black!25] (ver) at (-5.5, -2.5) {Verschlüsselung};
+\node[rectangle, fill=black!25] (entsch) at (5.5, -2.5) {Entschlüsselung};
+
+\draw[-latex, very thick] (-5, -0.5) -- (-5, -2.25) node[left, midway] {Klartext};
+\draw[-latex, very thick] (medium.north west) to [bend right=30] node[above, midway] {$\text{key}_B^{\text{public}}$} (-4.5, -2.25);
+
+\draw[-latex, very thick] (ver.south) to [bend right=30] node[above, midway, sloped] {Kryptotext} (medium.south west);
+
+\node[text width=2cm, align=left] (public_key) at (4.5, -1.5) {$\text{key}_B^{\text{public}}$};
+\node[text width=2cm, align=left] (private_key) at (6, -1.5) {$\text{key}_B^{\text{private}}$};
+
+\draw[-latex, very thick] (medium.south east) to [bend right=30] node[above, midway, sloped] {Kryptotext} (entsch.south);
+
+\draw[-latex, very thick] (public_key.west) to [bend right=20] (medium.north east);
+
+\draw[-latex, very thick] (6.75, -2.25) to node[below, midway, sloped] {Klartext} (6.75, -0.5);
+\draw[-latex, very thick] (5.5, -1.75) to (5.5, -2.25);
+\draw[-latex, very thick] (5.5, -0.5) to (4.5, -1.15);
+\draw[-latex, very thick] (5.5, -0.5) to (5.5, -1.15);
+
+\end{tikzpicture}
+\caption{Kommunikationsszenario bei asymmetrischen Kryptosystemen.}
+\label{figure-kommunikationsszenario-asymmetrische-kryptosysteme}
+\end{figure}

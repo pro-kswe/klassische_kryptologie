@@ -1,0 +1,265 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{set_theory}
+\chapterimagetitle{\uppercase{Set Theory}}
+\chapterimageurl{https://xkcd.com/982/}
+\chapterimagehover{Proof of Zermelo's well-ordering theorem given the Axiom of Choice: 1: Take S to be any set. 2: When I reach step three, if S hasn't managed to find a well-ordering relation for itself, I'll feed it into this wood chipper. 3: Hey, look, S is well-ordered.}
+
+\chapter{Mengenlehre}
+\label{chapter-mengenlehre}
+
+Mengen kennen wir aus dem Alltag. Eltern und Ihre Kinder stellen eine Menge von Personen dar (die Familie), die Schülerinnen und Schüler einer Schule bilden eine Menge und auch Gegenstände können zu einer Menge zusammengefasst werden. Wir befassen uns in diesem Kapitel mit den mathematischen Konzepten einer Menge. Die Lernziele lauten:
+
+\newcommand{\mengenlehreLernziele}{
+\protect\begin{todolist}
+\item Sie kennen die Grundlagen der Mengenlehre und wenden diese an.
+\item Sie arbeiten mit den Mengen der modularen Arithmetik.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-mengenlehre}, \nameref{chapter-mengenlehre}}{\protect\mengenlehreLernziele}
+
+\mengenlehreLernziele
+
+\section{Grundlagen}
+
+Meist ist intuitiv klar, was wir unter einer Menge verstehen, aber eine exakte Definition zu notieren ist gar nicht so einfach. Meist beruft man sich auf die Erklärung von Cantor aus dem Jahre 1895:
+
+\begin{definition}[Menge]
+Eine Menge ist eine Zusammenfassung von bestimmten, wohl unterschiedenen Objekten unserer Anschauung oder unseres Denkens zu einem Ganzen. Die Objekte der Menge werden Elemente genannt.
+\end{definition}
+
+In der Mathematik befassen wir uns mit Zahlenmengen. Die natürlichen Zahlen $\mathbb{N}$, die ganzen Zahlen $\mathbb{Z}$ oder auch die rationalen Zahlen $\mathbb{Q}$ stellen eine Menge von Zahlen dar. In der Informatik werden gerne auch Mengen, bestehend aus Zeichen betrachtet (sogenannte Alphabete).
+
+\subsection{Notationen}
+
+Wir bezeichnen Mengen mit \textbf{Grossbuchstaben} und geben \textbf{endliche Mengen} durch die \textbf{Aufzählung der Elemente} an. Wir notieren die Elemente einer Menge zwischen geschweiften Klammern und trennen die Elemente durch ein Komma.
+
+\begin{example}[Notation für endliche Mengen]
+Die Menge $M_1 = \{1, 2, 3, 4, 5\}$ besteht aus $5$ Elementen (den fünf Zahlen von $1$ bis und mit $5$).
+\end{example}
+
+Es gibt auch \textbf{unendliche Mengen}. Hier können wir zur Beschreibung der Menge \textbf{nicht} alle Elemente aufzählen. Deshalb gibt es weitere Möglichkeiten (wie zum Beispiel $\mathbb{R}$ für die reellen Zahlen) eine unendliche Menge zu notieren. Wir benötigen für die Kryptologie nur endliche Mengen und verzichten auf die weiteren Details bezüglich unendlichen Mengen.
+
+\begin{important}
+	Oft sieht man die Notation $x \in M$ für eine beliebige Menge $M$. Wir können dies wie folgt \say{übersetzen}: $x$ ist eine Variable (im mathematischen Sinn, nicht im Sinne einer Programmiersprache) für ein (beliebiges) Element aus der Menge $M$.
+\end{important}
+
+\subsection{Aufgaben}
+
+\begin{enumerate}
+\item Notieren Sie die Menge $M_1$ der möglichen Schulnoten im Zeugnis.
+\fillwithgrid{0.25in}
+\item Notieren Sie die Menge $M_2$ aller geraden Zahlen zwischen \num{0} und \num{10}.
+\fillwithgrid{0.25in}
+\item Notieren Sie die Menge $M_3$ der ersten zwölf Primzahlen.
+\fillwithgrid{0.25in}
+\end{enumerate}
+
+\section{Mengen der modularen Arithmetik}
+
+Rechnen wir mit dem Modulo-Operator, dann erhalten wir nur Zahlen aus einem gewissen Bereich.
+
+\subsection{Die Menge $\mathbb{Z}_m$}
+
+Die folgende Menge ist für die modulare Addition und Subtraktion von Bedeutung.
+
+\begin{definition}[$\mathbb{Z}_m$]
+Die Menge $\mathbb{Z}_m = \{0, 1, \dots, m - 1\}$ beinhaltet diejenigen Zahlen, welche durch $\bmod m$ möglich sind.
+\end{definition}
+
+\begin{example}
+$\mathbb{Z}_5$ beinhaltet die Zahlen $0$, $1$, $2$, $3$ und $4$, das heisst $\mathbb{Z}_5 = \{0, 1, 2, 3, 4 \}$. Wenn wir mit $\bmod 5$ rechnen, dann sind nur diese Zahlen möglich:
+
+\begin{multicols}{3}
+\begin{itemize}
+\item $0 \bmod 5 = 0$
+\item $1 \bmod 5 = 1$
+\item $2 \bmod 5 = 2$
+\item $3 \bmod 5 = 3$
+\item $4 \bmod 5 = 4$
+\item $5 \bmod 5 = 0$
+\item $6 \bmod 5 = 1$
+\item $7 \bmod 5 = 2$
+\item $8 \bmod 5 = 3$
+\item $9 \bmod 5 = 4$
+\item $10 \bmod 5 = 0$
+\item \dots
+\end{itemize}
+\end{multicols}
+
+\end{example}
+
+\subsection{Aufgaben}
+
+Bestimmen Sie für jede Teilaufgabe die Menge $\mathbb{Z}_m$. Achten Sie auf die korrekte Notation.
+
+\begin{multicols}{2}
+\begin{enumerate}
+	\item $\bmod 7 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\bmod 8 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\bmod 9 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\bmod 10 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\bmod 13 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\bmod 17 \Rightarrow \rule[-0.75mm]{4cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\subsection{Die Menge $\mathbb{Z}_m^*$}
+
+Wir betrachten nun die Menge $\mathbb{Z}_m^*$, die eine Teilmenge von $\mathbb{Z}_m$ darstellt. In der Menge $\mathbb{Z}_m^*$ sind alle zu $m$ teilerfremden Zahlen aus $\mathbb{Z}_m$ enthalten.
+
+\begin{definition}[Teilerfremd]
+	Zwei Zahlen $a$ und $b$ sind teilerfremd, genau dann wenn 
+	
+	\begin{center}
+	$ggT(a, b) = 1$
+	\end{center}
+	
+	 gilt.
+\end{definition}
+
+Der grösste gemeinsame Teiler zweier teilerfremden Zahlen ist somit exakt $1$. 
+
+\begin{example}
+	Die Zahlen $3$ und $7$ sind teilerfremd, da der grösste gemeinsame Teiler der beiden Zahlen $1$ ist, das heisst $ggT(3, 7) = 1$. Die beiden Zahlen $2$ und $8$ sind \textbf{nicht} teilerfremd, da $ggT(2, 8) = 2$ gilt.
+\end{example}
+
+\subsubsection{Aufgaben 1}
+
+Begründen Sie Ihre Antwort jeweils mit dem \ac{ggT}.
+
+\begin{enumerate}
+\item Sind \num{4} und \num{28} teilerfremd?
+
+\fillwithgrid{0.5in}
+
+\item Sind \num{11} und \num{29} teilerfremd?
+
+\fillwithgrid{0.5in}
+
+\item Sind \num{13} und \num{65} teilerfremd?
+
+\fillwithgrid{0.5in}
+
+\end{enumerate}
+
+Nun können wir die Menge $\mathbb{Z}_m^*$ exakter definieren:
+
+\begin{definition}[$\mathbb{Z}_m^*$]
+	Die Menge $\mathbb{Z}_m^*$ beinhaltet alle zu $m$ teilerfremden Zahlen von $0$ bis und mit $m-1$. Formaler: $\mathbb{Z}_m^* = \{a \in \mathbb{Z}_m | ggT(a, m) = 1 \}$
+\end{definition}
+
+Wir gehen also alle Zahlen aus $\mathbb{Z}_m$ durch und nehmen nur diejenigen in $\mathbb{Z}_m^*$ auf, die zu $m$ teilerfremd sind. Dies bedeutet auch, dass die Null \textbf{nicht} in $\mathbb{Z}_m^*$ vorkommt.
+
+\begin{example}
+	Wir wählen $m = 18$ und erhalten zunächst $\mathbb{Z}_{18} = \{0, 1, 2, 3, \dots, 16, 17 \}$. Nun bilden wir die Menge $\mathbb{Z}_{18}^*$, in dem wir alle zu $18$ teilerfremden Zahlen aus $\mathbb{Z}_{18}$ ermitteln. Wir erhalten somit $\mathbb{Z}_{18}^* = \{1, 5, 7, 11, 13, 17 \}$.
+\end{example}
+
+Ist $m$ eine \textbf{Primzahl}, dann können wir die Menge $\mathbb{Z}_m$ besonders einfach erstellen.
+
+\begin{definition}[$\mathbb{Z}_p^*$]
+	Wählen wir für $m$ eine Primzahl, dann beinhaltet die Menge $\mathbb{Z}_m^*$ alle Zahlen von $1$ bis und mit $m - 1$. Betrachten wir nur Mengen, bei denen $m$ eine Primzahl ist, dann notieren wir dafür $\mathbb{Z}_p^*$. 
+\end{definition}
+
+\begin{example}
+	Wir wählen die Primzahl $13$ und erhalten $\mathbb{Z}_{13}^*=\{1, 2, 3, \dots, 11, 12 \}$.
+\end{example}
+
+\subsubsection{Aufgaben 2}
+
+Bestimmen Sie für jede Teilaufgabe die Elemente der Menge. Achten Sie auf die korrekte Notation.
+
+\begin{multicols}{2}
+\begin{enumerate}
+	\item $\mathbb{Z}_{7}^* = \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\mathbb{Z}_{8}^* = \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\mathbb{Z}_{9}^* = \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\mathbb{Z}_{10}^* = \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\mathbb{Z}_{15}^* = \rule[-0.75mm]{4cm}{.5pt}$
+	\item $\mathbb{Z}_{17}^* = \rule[-0.75mm]{4cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\section{Generatoren}
+
+Betrachtet man die Menge $\mathbb{Z}_p^*$ und die modulare Multiplikation $\odot_{p}$, dann gibt es eine Zahl $g$ aus $\mathbb{Z}_p^*$, mit der man alle Zahlen aus $\mathbb{Z}_p^*$ durch
+
+\begin{center}
+	$g^k \bmod p$
+\end{center}
+
+erzeugen kann. Für jede Zahl $x$ aus $\mathbb{Z}_p^*$ gibt es somit einen passenden Exponenten $k$ (auch aus $\mathbb{Z}_p^*$), so dass $g^k \bmod p = x$ gilt. Die Zahl $g$ wird \textbf{Generator} genannt. Nicht jede Zahl aus $\mathbb{Z}_p^*$ ist ein Generator.
+
+\newpage
+
+\begin{example}
+	Wir betrachten die Menge $\mathbb{Z}_{13}^*$ mit der modularen Multiplikation $\odot_{13}$. Die Zahl 
+	$g = 2$ ist ein Generator, da man mit $2^k \bmod 13$ alle Zahlen aus $\mathbb{Z}_{13}^*$ erzeugen kann.
+	\begin{align*}
+		2^{1} \bmod 13 &= 2 & 2^{2} \bmod 13 &= 2 & 2^{3} \bmod 13 &= 8 \\
+		2^{4} \bmod 13  &= 3 & 2^{5} \bmod 13 &= 6 & 2^{6} \bmod 13 &= 12 \\
+		2^{7} \bmod 13 &= 11 & 2^{8} \bmod 13 &= 9 & 2^{9} \bmod 13 &= 5 \\
+		2^{10} \bmod 13 &= 10 & 2^{11} \bmod 13 &= 7 & 2^{12} \bmod 13 &= 1
+	\end{align*}
+\end{example}
+
+\subsection{Aufgaben}
+
+\begin{enumerate}
+	\item Finden Sie einen zweiten Generator für $\mathbb{Z}_{13}^*$ mit der modularen Multiplikation $\odot_{13}$.
+	
+	\fillwithgrid{3in}
+	
+	\item Finden Sie einen Generator für $\mathbb{Z}_{7}^*$ mit der modularen Multiplikation $\odot_{7}$.
+
+	\fillwithgrid{\stretch{1}}
+
+%\paragraph{Lösungsvorschlag:} Man muss nun eine Zahl aus $\mathbb{Z}_{7}^*$ finden, welche durch modulares Potenzieren alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugt. 
+%
+%\begin{itemize}
+%	\item Ist $1$ ein Generator?
+%	\begin{align*}
+%		1^{1} \bmod 7 &= 1 & 1^{2} \bmod 7 &= 1 & 1^{3} \bmod 7 &= 1 \\
+%		\dots & \dots & \dots 
+%	\end{align*}
+%Nein! Egal, wie wir den Exponenten wählen, es kommt immer $1$ raus. Ein Generator für $\mathbb{Z}_{7}^*$ muss aber alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugen.
+%
+%\item Ist $2$ ein Generator?
+%	\begin{align*}
+%		2^{1} \bmod 7 &= 2 & 2^{2} \bmod 7 &= 4 & 2^{3} \bmod 7 &= 1 \\
+%		2^{4} \bmod 7  &= 2 & 2^{5} \bmod 7 &= 4 & 2^{6} \bmod 7 &= 1 \\
+%		\dots & \dots & \dots
+%	\end{align*}
+%Nein! Wir können erkennen, dass sich bei wachsendem \textbf{Exponenten} das Ergebnis der modularen Potenz wiederholt. Wenn wir einmal in diesem \say{Kreis} sind, dann kann die Zahl kein Generator sein. Die Zahlen wiederholen sich immer wieder. Ein Generator für $\mathbb{Z}_{7}^*$ muss aber alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugen.
+%\item Ist $3$ ein Generator?
+%	\begin{align*}
+%		3^{1} \bmod 7 &= 3 & 3^{2} \bmod 7 &= 2 & 3^{3} \bmod 7 &= 6 \\
+%		3^{4} \bmod 7  &= 4 & 3^{5} \bmod 7 &= 5 & 3^{6} \bmod 7 &= 1 \\
+%	\end{align*}
+%Ja! Wir können erkennen, dass die Basis $3$ alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugt. Jeder Exponent aus $\mathbb{Z}_{7}^*$ wurde einmal benutzt. $3$ ist somit ein Generator für $\mathbb{Z}_{7}^*$. 
+%\item Ist $4$ ein Generator?
+%	\begin{align*}
+%		4^{1} \bmod 7 &= 4 & 4^{2} \bmod 7 &= 2 & 4^{3} \bmod 7 &= 1 \\
+%		4^{4} \bmod 7  &= 4 & 4^{5} \bmod 7 &= 2 & 4^{6} \bmod 7 &= 1 \\
+%	\end{align*}
+%Nein! Wir können erkennen, dass sich bei wachsendem \textbf{Exponenten} das Ergebnis der modularen Potenz wiederholt. Wenn wir einmal in diesem \say{Kreis} sind, dann kann die Zahl kein Generator sein. Die Zahlen wiederholen sich immer wieder. Ein Generator für $\mathbb{Z}_{7}^*$ muss aber alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugen.
+%\item Ist $5$ ein Generator?
+%	\begin{align*}
+%		5^{1} \bmod 7 &= 5 & 5^{2} \bmod 7 &= 4 & 5^{3} \bmod 7 &= 6 \\
+%		5^{4} \bmod 7  &= 2 & 5^{5} \bmod 7 &= 3 & 5^{6} \bmod 7 &= 1 \\
+%	\end{align*}
+%Ja! Wir können erkennen, dass die Basis $5$ alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugt. Jeder Exponent aus $\mathbb{Z}_{7}^*$ wurde einmal benutzt. $5$ ist somit (auch) ein Generator für $\mathbb{Z}_{7}^*$.
+%\item Ist $6$ ein Generator?
+%	\begin{align*}
+%		6^{1} \bmod 7 &= 6 & 6^{2} \bmod 7 &= 1 & 6^{3} \bmod 7 &= 6 \\
+%		6^{4} \bmod 7  &= 1 & 6^{5} \bmod 7 &= 6 & 6^{6} \bmod 7 &= 1 \\
+%	\end{align*}
+%Nein! Wir können erkennen, dass sich bei wachsendem \textbf{Exponenten} das Ergebnis der modularen Potenz wiederholt. Wenn wir einmal in diesem \say{Kreis} sind, dann kann die Zahl kein Generator sein. Die Zahlen wiederholen sich immer wieder. Ein Generator für $\mathbb{Z}_{7}^*$ muss aber alle Zahlen aus $\mathbb{Z}_{7}^*$ erzeugen.
+%\end{itemize}
+%
+%Für $\mathbb{Z}_{7}^*$ gibt es somit zwei Generatoren: $3$ und $5$.
+
+\end{enumerate}

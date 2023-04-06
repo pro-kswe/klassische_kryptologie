@@ -1,0 +1,192 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{authorization}
+\chapterimagetitle{\uppercase{Authorization}}
+\chapterimageurl{https://xkcd.com/1200/}
+\chapterimagehover{\footnotesize Before you say anything, no, I know not to leave my computer sitting out logged in to all my accounts. I have it set up so after a few minutes of inactivity it automatically switches to my brother's.}
+
+\chapter{IT-Sicherheit}
+\label{chapter-it-sicherheit}
+
+Die \ac{IT}-Sicherheit ist ein Teilgebiet der Informatik\footnote{Genauer: die Informationssicherheit ist ein Teilgebiet der Informatik. In der Informationssicherheit ist die \ac{IT}-Sicherheit als Teilbereich einzuordnen.} und kümmert sich um die Sicherung von \ac{IT}-Systemen gegen unbeabsichtigte Fehler und Ereignisse, sowie beabsichtigte Angriffe von aussen und innen. Die Lernziele lauten wie folgt:
+
+\newcommand{\itSicherheitLernziele}{
+\protect\begin{todolist}
+\item Sie unterscheiden Computer Safety und Computer Security.
+\item Sie erklären die Begriffe der Zugangskontrolle und Zugriffskontrolle an einem Beispiel.
+\item Sie erläutern gängige Typen von Schadsoftware und wie wir uns davor schützen.
+\item Sie unterscheiden die Sicherheit einzelner Rechner und die Netzwerksicherheit. Bei der Netzwerksicherheit gehen Sie auf den Begriff der Datensicherheit ein.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-it-sicherheit}, \nameref{chapter-it-sicherheit}}{\protect\itSicherheitLernziele}
+
+\itSicherheitLernziele
+
+\section{Computer Safety}
+
+Bei der Computer Safety geht es um den \textbf{Schutz} vor \textbf{unbeabsichtigten Schäden}.
+
+\begin{example}
+Eine Auswahl von \textbf{un}beabsichtigten Schäden:
+\begin{itemize}
+\item Höhere Gewalt (z.B. Überschwemmungen, Blitzeinschläge)
+\item Technische Fehler (z.B. Übertragungsfehler in der Kommunikation)
+\item Fahrlässigkeit (z.B. unbeabsichtigtes Löschen, falsche Bedienung)
+\item Programmierfehler
+\item Verschleiss (z.B. Festplatten-Crashs)
+\end{itemize}
+\end{example}
+
+Die Computer Safety beinhaltet nun Massnahmen, um sich vor diesen Schäden zu schützen.
+
+\begin{example}
+Eine Auswahl von Computer Safety-Massnahmen:
+\begin{itemize}
+\item Regelmässige, automatisierte Backups der Daten
+\item Redundante \ac{IT}-Systeme (Hardware und Software)
+\item Ausführliches, automatisiertes Testen von \ac{IT}-Systemen
+\end{itemize}
+\end{example}
+
+\section{Computer Security}
+
+Die Computer Security widmet sich der \textbf{Sicherheit} vor \textbf{absichtlichen Störungen}. Wir sprechen auch von \textbf{beabsichtigten Angriffen} gegen ein \ac{IT}-System.
+
+\begin{example}
+Eine Auswahl von beabsichtigten Angriffen:
+\begin{itemize}
+\item Abhören (z.B. Schnüffeln in geheimen Daten)
+\item Identitätsdiebstahl (z.B. Phishing)
+\item Einsatz von Schadsoftware (z.B. Viren, Ransomware)
+\end{itemize}
+\end{example}
+
+Die Computer Security teilen wir in zwei Teilgebiete auf: Die Sicherheit \textbf{einzelner Computer} und die Sicherheit für \textbf{vernetzte Computer} (\textbf{Netzwerksicherheit}).
+
+\subsection{Sicherheit einzelner Computer}
+
+Der persönliche Computer ist der Vertrauensbereich des Benutzers. Dieser Bereich ist vor Zugang und Zugriff von Unberechtigten zu schützen.
+
+\subsubsection{Zugangskontrolle}
+
+Ein \ac{IT}-System prüft die Identität des Benutzers, damit nur berechtigte Personen Zugriff auf das System erhalten. Dieser Vorgang wird \textbf{Zugangskontrolle} genannt (eng. admission control).
+
+\begin{example}
+Eine Auswahl von Zugangskontrollen:
+\begin{itemize}
+\item E-Mail-Adresse und Passwort
+\item Fingerabdruck bzw. Aussehen (z.B: Touch ID oder Face ID beim iPhone)
+\item Sicherheitsfragen (z.B. wenn wir das Passwort vergessen haben)
+\item \ac{2FA} (zum Beispiel Passwort und ein temporärer Zugangscode via \ac{SMS})
+\end{itemize}
+\end{example}
+
+Während der \textbf{Authentifizierung} (eng. authentication) wird dann geprüft, ob der Identitätsnachweis echt ist. Bei einem \ac{IT}-System wird zum Beispiel geprüft, ob die E-Mail-Adresse im \ac{IT}-System existiert und das dazugehörige Passwort korrekt ist.
+
+\subsubsection{Zugriffskontrolle}
+
+Hat ein Benutzer den Zugang zu einem \ac{IT}-System (z.B. erfolgreiches Log-in) erhalten, dann möchten wir meistens nicht allen Benutzern auch alle Funktionalitäten erlauben. Die \textbf{Zugriffskontrolle} (eng. access control) regelt, dass ein berechtigter Benutzer nur bestimmte \textbf{Rechte} besitzt.
+
+\begin{example}
+Alle Benutzer des \ac{KSWE} Intranets können die News-Beiträge lesen. Es können jedoch nicht alle einen neuen News-Beitrag erstellen. Die Benutzerrechte der KSWE Intranetbenutzer regeln die möglichen Aktionen im \ac{KSWE} Intranet.
+\end{example}
+	
+Die \textbf{Autorisierung} (eng. authorization) bezeichnet den Prozess der Rechtevergabe.
+
+\begin{important}[Authentifizierung und Autorisierung unterscheiden]
+Oft werden diese beiden Konzepte vertauscht. Deshalb nochmal zusammengefasst:
+\begin{itemize}
+\item \textbf{Authentifizierung}: Identitätsüberprüfung (\say{who are you})
+\item \textbf{Autorisierung}: Rechtevergabe (\say{what you are allowed to do})
+\end{itemize}
+\end{important}
+
+\subsubsection{Schutz vor Schadsoftware}
+
+Ein Computer sollte durch das Prinzip der geringstmöglichen Privilegierung verhindern, dass sich Schadsoftware auf dem System ausbreitet. Dies bedeutet, dass jede Software nur die minimal notwendigen Rechte erhält. In der Praxis sieht dies meist so aus, dass das Betriebssystem (z.B. Microsoft Windows) den Benutzer um eine Bestätigung bittet, falls eine Software am System Änderungen vornehmen will. Typischerweise fassen wir heute alle Varianten von Schadsoftware unter dem Begriff \textbf{Malware}\footnote{Kofferwort aus \textbf{Mal}icious (dt. bösartig) und Soft\textbf{ware}.} zusammen. Typischerweise gibt es folgende Malware:
+
+\begin{itemize}
+\item \textbf{Virus}: Ausführbarer Code der sich in fremde Programme einpflanzt (\say{infiziert}), dort ausgeführt wird und eventuell dann, durch das Ausführen des fremden Programms, einen Schaden anrichtet.
+\item \textbf{Wurm}: Eigenständiges Programm, welches auf einem System ausgeführt werden kann und dort dann eventuell einen Schaden anrichtet.
+\item \textbf{Trojanisches Pferd}: Ist ein Computerprogramm, das neben einer bekannten (vom Benutzer gewünschten) Funktion eine (nicht gewünschte) Schadenfunktion ausführt. Oft auch einfach \say{Trojaner} genannt.
+\end{itemize}
+
+Viren und Würmer verbreiten sich meist selbst. Sie erstellen eine Kopie und nutzen vorhandene Kommunikationskanäle zur Verbreitung. Ein Trojanisches Pferd wird meist aktiv vom Benutzer installiert. Meist ist ein trojanisches Pferd als sinnvolle Software getarnt und wird somit vom Benutzer heruntergeladen und installiert.
+
+\subsection{Netzwerksicherheit}
+
+Bei der Sicherheit von vernetzten Computern können wir mehrere Aspekte absichern. Eine \textbf{Firewall} ist eine Kombination aus Hardware und Software und schützt zum Beispiel das Netzwerk vor ungewünschten Zugriffen.  Wir möchten uns jedoch in diesem Skript darum kümmern, wie wir \textbf{Datensicherheit} in einem Netzwerk erreichen. Dabei verfolgen wir folgende Ziele:
+
+\begin{itemize}
+\item \textbf{Abhörsicherheit}: Wie können zwei Personen über ein Computernetzwerk eine Nachricht austauschen, ohne dass eine dritte, unbefugte Person die Nachricht einsehen kann?
+\item \textbf{Zurechenbarkeit}: Wie können wir nachprüfen, dass eine Nachricht von einem bestimmten Absender stammt?
+\end{itemize}
+
+\begin{hinweis}
+Sie müssen Datensicherheit vom Datenschutz abgrenzen. Beim \textbf{Datenschutz} geht es um die Wahrung der Persönlichkeitsrechte natürlicher Personen in Bezug auf die Verarbeitung von Daten über sie. Es geht um den Schutz \textbf{vor} personenbezogenen Daten.
+\end{hinweis}
+
+\begin{important}[Kryptologie]
+Die Kryptologie kümmert sich um die \textbf{Abhörsicherheit} und \textbf{Zurechenbarkeit} von Daten. Sie ist somit ein Teilgebiet der Netzwerksicherheit.
+\end{important}
+
+\newpage
+
+\section{Aufgaben}
+\label{section-aufgaben-it-sicherheit}
+
+% Rewrite to use this package: https://ctan.math.utah.edu/ctan/tex-archive/macros/latex/contrib/exsheets/exsheets_en.pdf
+
+\begin{enumerate}
+
+\item Füllen Sie die korrekten Begriffe in die Lücken ein. Sie finden die gesuchten Begriffe in diesem Kapitel.
+
+\begin{spacing}{3.25}
+\large
+Bei der Computer Safety geht es um den \rule[-0.75mm]{6cm}{.5pt} vor \\ \rule[-0.75mm]{6cm}{.5pt} (z.B. \rule[-0.75mm]{4cm}{.5pt}). Eine Schutzmassnahme kann zum Beispiel \rule[-0.75mm]{6cm}{.5pt} sein. Die Computer Security widmet sich im Gegensatz dazu, wie \rule[-0.75mm]{6cm}{.5pt} vor \rule[-0.75mm]{6cm}{.5pt} gewährleistet werden kann. Wir sprechen auch von \rule[-0.75mm]{6cm}{.5pt} (z.B. \rule[-0.75mm]{6cm}{.5pt}) gegen ein \ac{IT}-System. Die \rule[-0.75mm]{6cm}{.5pt} unterteilen wir in zwei Gebiete: die Sicherheit einzelner Computer und die Netzwerksicherheit. Die \rule[-0.75mm]{6cm}{.5pt} und \rule[-0.75mm]{6cm}{.5pt} sind die zentralen Prozesse, wenn es darum geht den persönlichen Computer vor dem Zugang und Zugriff von Unberechtigten zu schützen. Bei der Netzwerksicherheit geht es um die \rule[-0.75mm]{6cm}{.5pt} in einem Netzwerk. Die \rule[-0.75mm]{4cm}{.5pt} und \rule[-0.75mm]{6cm}{.5pt} spielen dabei eine wichtige Rolle. Genau darum kümmert sich die \rule[-0.75mm]{6cm}{.5pt} .
+\end{spacing}
+
+
+\item Lesen Sie den Abschnitt zum Thema \say{Schutz vor Schadsoftware}. Informieren Sie sich dann über folgende Malware-Ereignisse und fassen Sie diese kompakt zusammen.
+
+\begin{enumerate}
+\item \say{Loveletter}
+
+\fillwithgrid{1in}
+
+\item \say{Sasser}
+
+\fillwithgrid{1in}
+
+\item \say{WannaCry}
+
+\fillwithgrid{1in}
+
+\end{enumerate}
+
+\item Stellen Sie die folgenden Begriffe in einem \textbf{hierarchischen Diagramm} übersichtlich dar.
+
+\begin{itemize*}
+\item Abhörsicherheit
+\item \ac{IT}-Sicherheit
+\item Autorisierung
+\item Authentifizierung
+\item Firewall
+\item Zugangskontrolle
+\item Computer Safety
+\item Zugriffskontrolle
+\item Kryptologie
+\item Zurechenbarkeit
+\item Sicherheit einzelner Computer
+\item Computer Security
+\item Netzwerksicherheit
+\end{itemize*}
+
+\fillwithgrid	{\stretch{1}}
+
+\end{enumerate}
+
+

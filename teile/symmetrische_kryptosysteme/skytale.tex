@@ -1,0 +1,62 @@
+%\section{Das Kryptosystem \texttt{SKYTALE}}
+%
+%Das älteste bekannte Kryptosystem wurde ungefähr 500 Jahre v. u. Z. in Sparte entwickelt und verwendet. Die \texttt{SKYTALE} setzt voraus, dass Sender und Empfänger jeweils in Besitz eines Holzstabes mit genau demselben Durchmesser sind. Um eine Nachricht zu verschlüsseln, wickelt der Sender einen schmalen Papierstreifen um den Holzstab. Das Papier wird von links nach rechts beschrieben (Satzzeichen und Leerzeichen entfernen).
+%
+%\subsection{Aufgabe 3}
+% 
+%\begin{enumerate}
+%\item Was ist bei \texttt{SKYTALE} der Schlüssel?
+%\item Ist \texttt{SKYTALE} gemäss Kerkhoff ein sicheres Kryptosystem? Können Sie aus einem Kryptotext den Klartext ermitteln (ohne einen Holzstab zu verwenden)? Falls ja, wie?
+%\item Wie unterscheidet sich das Verschlüsselungsverfahren von \texttt{CAESAR}?
+%\end{enumerate}
+%
+%\paragraph{Lösungsvorschlag}
+%
+%\begin{enumerate}
+%\item Der Durchmesser des Stabes.
+%\item \texttt{SKYTALE} ist nicht sicher. Man kann den Klartext auch ohne den Holzstab ermitteln. Man muss einfach alle möglichen Vertauschungen der Buchstaben durchprobieren (maximal so viele wie der Text lang ist).
+%\item Bei \texttt{SKYTALE} entsteht die Verschlüsselung durch das Vertauschen der Symbole (Transposition). Bei \texttt{CAESAR} entsteht die Verschlüsselung durch das Ersetzen von Symbolen durch andere Symbole (Substitution).
+%\end{enumerate}
+%
+%\section{Abstraktion von Kryptosystemen}
+%
+%Wir können Kryptosysteme auch auf das Wesentliche reduzieren. Das Ziel ist dabei Hilfsmittel, wie zum Beispiel die Drehscheibe oder den Holzstab, mathematisch zu beschreiben. Man möchte das Verschlüsseln und Entschlüsseln durch einen Text oder eine Formel beschreiben. Wenn man Einzelheiten weglässt und Eigenschaften verallgemeinert, dann spricht man von Abstraktion. Wir möchten dies nun auf die beiden Kryptosysteme \texttt{SKYTALE} und \texttt{CAESAR} anwenden.
+%
+%\begin{definition}[\texttt{SKYTALE}]
+%Wir definieren das Kryptosystem wie folgt:
+%\begin{itemize}
+%\item \textbf{Klartextalphabet}: $\mathscr{A}_{Klar} = \mathscr{A}_{Lat}$
+%\item \textbf{Kryptotextalphabet}: $\mathscr{A}_{Krypto} = \mathscr{A}_{Lat}$
+%\item \textbf{Schlüsselmenge}: $\mathscr{S}_{SKYTALE} = {1, 2, \dots, n}$ wobei $n$ die Länge des Klartextes ist.
+%\item \textbf{Verschlüsselung}:Sei $s \in {1, 2, \dots, n}$ der Schlüssel. Schreibe den Klartext zeilenweise in $\lceil \frac{n}{s} \rceil$ Spalten auf\footnote{$\lceil \frac{n}{s} \rceil$ bedeutet: $\frac{n}{s}$ berechnen und dann auf die nächste ganze Zahl aufrunden.}. Der Kryptotext besteht aus der Folge der spaltenweise gelesenen Buchstaben in dieser Anordnung des Klartextes.
+%\item \textbf{Entschlüsselung}: Schreibe den Text spaltenweise in $s$ Zeilen auf. Den Klartext bekommt man, in dem der Text zeilenweise abgelesen wird.
+%\end{itemize}
+%\end{definition}
+%
+%\begin{example}
+%Wir verschlüsseln den Klartext FETTE PARTY IN DER MENSA UM DREI UHR (ohne Leerzeichen). Wir haben $n = 29$ (Länge des Klartextes). Somit müssen wir den Klartext in $\lceil \frac{n}{s} \rceil = \lceil \frac{29}{4} \rceil = \lceil 7.25 \rceil = 8$ Spalten aufteilen. Wir haben als Schlüssel $s = 4$ gewählt. Wir notieren den Klartext somit in 8 Spalten und 4 Zeilen und füllen die \say{leeren} Zellen mit beliebigen Buchstaben auf.
+%
+%\begin{table}[htb]
+%\centering
+%\begin{tabular}{c|c|c|c|c|c|c|c}
+%1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+%F & E & T & T & E & P & A & R \\
+%T & Y & I & N & D & E & R & M \\
+%E & N & S & A & U & M & D & R \\
+%E & I & U & H & R & X & Y & Z
+%\end{tabular}
+%\end{table}
+%
+%Wir erhalten den Kryptotext, in dem wir Spalte für Spalte die Buchstaben notieren. Wir beginnen mit der ersten Spalte und erhalten somit FTEEEYNITISUTNAHEDURPEMXARDYRMRZ. Damit wir aus dem Kryptotext wieder den Klartext erhalten, müssen wir den Kryptotext in 4er-Gruppen (da $s = 4$) aufteilen: FTEE EYNI TISU TNAH EDUR PEMX ARDY RMRZ. Dann die 4er-Gruppen in Spalten schreiben und von links nach rechts (zeilenweise) lesen.
+%
+%\begin{table}[htb]
+%\centering
+%\begin{tabular}{c|c|c|c|c|c|c|c|c}
+%1 & F & E & T & T & E & P & A & R \\
+%2 & T & Y & I & N & D & E & R & M \\
+%3 & E & N & S & A & U & M & D & R \\
+%4 & E & I & U & H & R & X & Y & Z
+%\end{tabular}
+%\end{table}
+%
+%\end{example}

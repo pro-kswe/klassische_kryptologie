@@ -1,0 +1,190 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{engineer_syllogism}
+\chapterimagetitle{\uppercase{Engineer Syllogism}}
+\chapterimageurl{https://xkcd.com/1570/}
+\chapterimagehover{The less common, even worse outcome: "3: [everyone in the financial system] WOW, where did all my money just go?"}
+
+\chapter[Multiplikation und Potenzierung]{Multiplikation, Potenzierung und Kehrwert}
+\label{chapter-modulare-multiplikation-potenzierung-kehrwert}
+
+Multiplizieren und Potenzieren erfolgt analog zur Addition und Subtraktion. Wir müssen einfach den Modulo-Operator beachten. Die Division zweier natürlicher Zahlen verläuft anders. Wir müssen dabei darauf achten, keine Kommazahlen zu erzeugen. Die Lernziele lauten:
+
+\newcommand{\modulareMultiplikationPotenzierungKehrwertLernziele}{
+\protect\begin{todolist}
+\item Sie führen die modulare Multiplikation durch.
+\item Sie erklären, was wir unter einem Kehrwert verstehen.
+\item Sie bestimmen den modularen Kehrwert einer Zahl.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-modulare-multiplikation-potenzierung-kehrwert}, \nameref{chapter-modulare-multiplikation-potenzierung-kehrwert}}{\protect\modulareMultiplikationPotenzierungKehrwertLernziele}
+
+\modulareMultiplikationPotenzierungKehrwertLernziele
+
+\section{Modulare Multiplikation}
+
+Wir können zwei natürliche Zahlen multiplizieren und dabei mit $\bmod$ rechnen. Dazu multiplizieren wir zunächst die beiden Zahlen und berechnen dann den Rest der ganzzahligen Division.
+
+\begin{definition}[Modulare Multiplikation]
+Wir multiplizieren zwei natürliche Zahlen $x$ und $y$ und berechnen anschliessend den Rest der ganzzahligen Division mit $a$. Wir notieren dies wie folgt:
+
+\begin{center}
+$x \odot_{a} y = (x \cdot y) \bmod a$
+\end{center}
+
+Wir nennen diese Rechnung Multiplikation Modulo $a$.
+\end{definition}
+
+\begin{example}
+Folgende Zahlen sind gegeben: $x = 15$, $y = 17$ und $a = 26$. Wir berechnen somit $15 \odot_{26} 17 = (15 \cdot 17) \bmod 26 = 255 \bmod 26 = 21$.
+\end{example}
+
+\subsection{Aufgaben}
+
+Schreiben Sie das Ergebnis der folgenden Berechnungen direkt hinter die Teilaufgabe. Sie können unten Nebenrechnungen durchführen.
+
+\begin{multicols}{3}
+\begin{enumerate}
+\item $25 \odot_{26} 25 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $3 \odot_{3} 8 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $7 \odot_{2} 11 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $7 \odot_{5} 8 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $70 \odot_{2} 8 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $200 \odot_{11} 10 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $\num{1327} \odot_{11} \num{21837} = \rule[-0.75mm]{0.75cm}{.5pt}$
+\item $\num{1832} \odot_{3} \num{7777} = \rule[-0.75mm]{1.25cm}{.5pt}$
+\item $\num{3728} \odot_{11} \num{21117} = \rule[-0.75mm]{0.75cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\fillwithgrid	{\stretch{1}}
+
+\newpage
+
+\section{Modulare Potenzierung}
+
+Wir können auch Potenzen $\bmod a$ berechnen, da das Potenzieren eine abkürzende Schreibweise für die Multiplikation mit demselben Faktor ist (zum Beispiel $7^3 = 7 \cdot 7 \cdot 7$).
+
+\begin{definition}[Modulares Potenzieren]
+Wir potenzieren eine natürliche Zahlen $x$ mit $y$ und berechnen anschliessend den Rest der ganzzahligen Division mit $a$. Wir notieren dies wie folgt:
+
+\begin{center}
+$x^y \bmod a = \underbrace{x \odot_{a} x \cdots \odot_{a} x}_{y-\text{mal}} = (\underbrace{x \cdot x \cdots \cdot x}_{y-\text{mal}}) \bmod a$
+\end{center}
+
+Wir nennen diese Rechnung Potenzieren Modulo $a$.
+\end{definition}
+
+\subsection{Aufgaben}
+
+Schreiben Sie das Ergebnis der folgenden Berechnungen direkt hinter die Teilaufgabe. Sie können unten Nebenrechnungen durchführen.
+
+\begin{multicols}{3}
+\begin{enumerate}
+\item $2^8 \bmod 26 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $10^{10} \bmod 10 = \rule[-0.75mm]{1.25cm}{.5pt}$
+\item $2^{16} \bmod 4 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $5^{8} \bmod 11 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $16^{3} \bmod 2 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\item $7^{7} \bmod 14 = \rule[-0.75mm]{1.5cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\fillwithgrid	{1in}
+
+\section{Modularer Kehrwert}
+
+In der Arithmetik gibt es für jede positive, ganze Zahl $x$ den Quotienten $\frac{1}{x}$, sodass die Multiplikation beider Zahlen $1$ ergibt.
+
+\begin{example}
+	$5$ multipliziert mit $\frac{1}{5}$ ergibt $1$. Kurz: $5 \cdot \frac{1}{5} = 1$. 
+\end{example}
+
+Wir bezeichnen den Quotienten $\frac{1}{x}$ als \textbf{Kehrwert} von $x$. Statt $\frac{1}{x}$ notieren wir auch $x^{-1}$.\\
+
+\subsection{Aufgaben}
+
+Bestimmen Sie den Wert für $x$, sodass die Gleichung erfüllt ist. Schreiben Sie das Ergebnis direkt hinter die Teilaufgabe.
+
+\begin{multicols}{3}
+\begin{enumerate}
+\item $42 \cdot x = 1 \Leftrightarrow x = \rule[-0.75mm]{1cm}{.5pt}$
+\item $10 \cdot x = 1 \Leftrightarrow x = \rule[-0.75mm]{1cm}{.5pt}$
+\item $13 \cdot x = 1 \Leftrightarrow x = \rule[-0.75mm]{1cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+Rechnen wir mit \textbf{Zahlen aus $\mathbb{Z}_p^*$}, dann sind nur \textbf{natürliche Zahlen} vorhanden. Der Kehrwert kann dann \textbf{kein} gewöhnlicher Bruch mehr sein, da eine reelle Zahl (Kommazahl) entstehen kann. Wir können jedoch den \textbf{modularen Kehrwert} berechnen. Für jede Zahl $a$ aus $\mathbb{Z}_p^*$ existiert eine Zahl $b$ aus $\mathbb{Z}_p^*$, sodass die modulare Multiplikation mit $\bmod p$ die Zahl $1$ ergibt.
+
+\begin{definition}[Modularer Kehrwert]
+	Sei $\mathbb{Z}_{p}^*$ für eine Primzahl $p$ gegeben. Die Zahl $b \in \mathbb{Z}_{p}^*$ nennen wir modularer Kehrwert von $a \in \mathbb{Z}_{p}^*$, falls folgende Gleichung gilt:
+
+\begin{center}
+$(a \cdot b) \bmod p = 1$
+\end{center}
+	
+$b$ ist also diejenige Zahl, die mit $a$ multipliziert, die Zahl $1$ ergibt. Dabei muss die modulare Rechnung berücksichtigt werden. $a$ und $b$ dürfen auch gleich sein.
+\end{definition}
+
+Wir können den modularen Kehrwert einer Zahl mit einer Erweiterung des Euklidischen Algorithmus berechnen. Wir verzichten hier auf die Einführung des Algorithmus. Für \textbf{kleine Primzahlen} können wir den modularen Kehrwert auch durch \say{systematisches Durchprobieren} bestimmen.
+
+\begin{example}
+	Wir betrachten $\mathbb{Z}_{13}^* = \{1, 2, 3, \dots, 10, 11, 12\}$. Wir können den modularen Kehrwert von $a = 5$ bestimmen, in dem wir systematisch alle Zahlen von \num{1} bis \num{12} ausprobieren und für $b$ in $(a \cdot b) \bmod p = (5 \cdot b) \bmod 13$ einsetzen. 
+
+\begin{multicols}{2}
+	\begin{itemize}
+		\item $5 \cdot \textbf{1} \bmod 13 = 5 \neq 1$
+		\item $5 \cdot \textbf{2} \bmod 13 = 10 \neq 1$
+		\item $5 \cdot \textbf{3} \bmod 13 = 15 \bmod 13 = 2 \neq 1$
+		\item $5 \cdot \textbf{4} \bmod 13 = 20 \bmod 13 = 7 \neq 1$
+		\item $5 \cdot \textbf{5} \bmod 13 = 25 \bmod 13 = 12 \neq 1$
+		\item $5 \cdot \textbf{6} \bmod 13 = 30 \bmod 13 = 4 \neq 1$
+		\item $5 \cdot \textbf{7} \bmod 13 = 35 \bmod 13 = 9 \neq 1$
+		\item $5 \cdot \textbf{8} \bmod 13 = 40 \bmod 13 = 1$ \checkmark
+	\end{itemize}
+\end{multicols}
+	
+Der modulare Kehrwert von $a = 5$ ist $b = 8$, da $(a \cdot b) \bmod p = (5 \cdot 8) \bmod 13 = 40 \bmod 13 = 1$ gilt.
+	
+\end{example}
+
+Da $p$ eine Primzahl ist, existiert für jedes Element aus $\mathbb{Z}_p^*$ der modulare Kehrwert. Allgemein gilt dies jedoch nicht.
+
+\begin{theorem}[Existenz des modularen Kehrwerts]
+	Rechnen wir mit $\bmod m$, dann existiert für eine Zahl $x$ der modulare Kehrwert nur dann, wenn $x$ und $m$ teilerfremd sind, das heisst $ggT(x, m) = 1$. 
+\end{theorem}
+
+Da in $\mathbb{Z}_p^*$ gerade alle Zahlen teilerfremd zu $p$ sind, gibt es für jedes Element einen modularen Kehrwert. Der modulare Kehrwert wird auch \textbf{modular multiplikativ Inverses} genannt.
+
+\subsection{Aufgaben}
+
+Listen Sie für alle Elemente den modularen Kehrwert auf. Verwenden Sie Notizpapier für Nebenrechnungen.
+
+\begin{enumerate}
+	\item $\mathbb{Z}_{7}^* = \{1, 2, 3, 4, 5, 6\}$
+	
+	\fillwithgrid{2in}
+	
+	\item $\mathbb{Z}_{11}^* = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$
+	
+	\fillwithgrid{2in}
+	
+	\item $\mathbb{Z}_{13}^* = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}$
+	
+	\fillwithgrid{2in}
+	
+	\item $\mathbb{Z}_{17}^* = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16\}$
+	
+	\fillwithgrid{2in}
+	
+	\item $\mathbb{Z}_{19}^* = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18\}$
+	
+	\fillwithgrid{2in}
+	
+	\item $\mathbb{Z}_{23}^* = \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22\}$
+	
+	\fillwithgrid{2in}
+\end{enumerate}

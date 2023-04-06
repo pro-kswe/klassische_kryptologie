@@ -1,0 +1,62 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{two_key_system_2x}
+\chapterimagetitle{\uppercase{Two Key System}}
+\chapterimageurl{https://xkcd.com/2677/}
+\chapterimagehover{Our company can be your one-stop shop for decentralization.}
+
+\chapter{Digitale Schlüsselverteilung}
+\label{chapter-digitale-schluesselverteilung}
+
+Wir wollen nun die analoge Schlüsselverteilung (siehe \autoref{chapter-schluesselverteilung-truhe}) in die digitale Welt bringen. Dazu versuchen wir die Truhe, Schlüssel und Vorhängeschlösser durch die Komponenten eines bereits bekannten Kryptosystems zu ersetzen, da das Abschliessen eines Vorhängeschlosses exakt dem Verschlüsseln entspricht und das Öffnen des Vorhängeschlosses dem Entschlüsseln. Bevor wir jedoch verschiedene Lösungen diskutieren, muss folgende Voraussetzung geklärt werden:
+
+\begin{important}
+	\item Beim Entfernen des blauen Vorhängeschlosses (Buchstabe A in \autoref{figure-schluesselverteilung-truhe}), darf weder die Truhe noch das rote Vorhängeschloss (Buchstabe B) beschädigt werden.
+\end{important}
+
+Diese Eigenschaft müssen wir in der digitalen Umsetzung übernehmen. Dies bedeutet, dass beim ersten Entschlüsseln von Alice, die Verschlüsselung von Bob nicht verändert werden darf. Bob muss bei seiner Entschlüsselung den gemeinsamen Schlüssel erhalten. Dies ist nur für solche Kryptosysteme möglich, bei denen die Verschlüsselung kommutativ ist.
+
+\begin{definition}[Kommutative Verschlüsselung]
+	Spielt bei doppelter Verschlüsselung eines Klartextes, die Reihenfolge der Verschlüsselung \textbf{keine} Rolle, dann ist es kommutativ.
+\end{definition}
+
+Die Kryptosysteme \texttt{VIGENÈRE}/\texttt{-ABSTRAKT}/\texttt{-PLUS} und \texttt{ONE-TIME-PAD} besitzen eine kommutative Verschlüsselung. Dies liegt daran, dass $\oplus_{26}$ bzw. $\oplus_2$ ein kommutativer Operator ist. Wir zeigen an einem Beispiel, dass die Verschlüsselung mit \texttt{ONE-TIME-PAD} kommutativ ist.
+
+\begin{example}
+
+Wir verschlüsseln mit $\oplus_2$ den Klartext mit dem ersten Schlüssel. Den daraus erhaltenen Kryptotext verschlüsseln wir nochmals mit $\oplus_2$ und dem zweiten Schlüssel. Anschliessend tauschen wir die Reihenfolge der Schlüssel.
+
+\begin{table}[htb]
+\small
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\caption*{1. Reihenfolge}
+\begin{tblr}{|l|c|}
+\hline
+Klartext      	 & \texttt{110100} \\ \hline
+Schlüssel$\_1$  & \texttt{101010} \\ \hline\hline
+Kryptotext$\_1$ & \texttt{011110} \\ \hline
+Schlüssel$\_2$  & \texttt{001011} \\ \hline\hline
+Kryptotext$\_2$ & \texttt{010101} \\ \hline
+\end{tblr}
+\end{minipage}
+\begin{minipage}{0.45\textwidth}
+\centering
+\caption*{2. Reihenfolge}
+\begin{tblr}{|l|c|}
+\hline
+Klartext      & \texttt{110100} \\ \hline
+Schlüssel$\_2$  & \texttt{001011} \\ \hline\hline
+Kryptotext$\_1$ & \texttt{111111} \\ \hline
+Schlüssel$\_1$  & \texttt{101010} \\ \hline\hline
+Kryptotext$\_2$ & \texttt{010101} \\ \hline
+\end{tblr}	
+\end{minipage}
+\end{table}
+
+Wir erhalten denselben Kryptotext.
+
+\end{example}

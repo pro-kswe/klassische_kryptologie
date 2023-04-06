@@ -1,0 +1,139 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{2}
+\chapterimagetitle{\uppercase{2}}
+\chapterimageurl{https://xkcd.com/2614/}
+\chapterimagehover{It's like sigma summation notation, except instead of summing the argument over all values of i, you 2 the argument over all values of 2.}
+
+\chapter{Addition und Subtraktion}
+\label{chapter-modulare-addition-und-subtraktion}
+
+Die Grundrechenarten Addition und Subtraktion können wir fast wie gewöhnlich durchführen. Wir müssen einfach immer mit $\bmod$ rechnen. Die Lernziele lauten:
+
+\newcommand{\modulareAdditionSubtraktionLernziele}{
+\protect\begin{todolist}
+\item Sie verwenden die formale Notation für die modulare Rechnung.
+\item Sie führen die modulare Addition und Subtraktion durch.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-modulare-addition-und-subtraktion}, \nameref{chapter-modulare-addition-und-subtraktion}}{\protect\modulareAdditionSubtraktionLernziele}
+
+\modulareAdditionSubtraktionLernziele
+
+\vspace{-0.25cm}
+
+\section{Modulare Addition}
+
+Wir addieren zwei natürliche Zahlen wie gewohnt und berücksichtigen dann den Modulo-Operator.
+
+\begin{definition}[Modulare Addition]
+Wir addieren zwei natürliche Zahlen $x$ und $y$ und berechnen anschliessend den Rest der ganzzahligen Division mit $a$. Wir notieren dies wie folgt:
+
+\begin{center}
+$x \oplus_a y = (x + y) \bmod a$
+\end{center}
+
+Wir nennen diese Rechnung Addition Modulo $a$.
+
+\end{definition}
+
+\begin{example}
+Folgende Zahlen sind gegeben: $x = 15$, $y = 17$ und $a = 26$. Wir berechnen somit $15 \oplus_{26} 17 = (15 + 17) \bmod 26 = 32 \bmod 26 = 6$.
+\end{example}
+
+\subsection{Aufgaben}
+
+\begin{enumerate}
+	\item Schreiben Sie das Ergebnis der folgenden Berechnungen direkt hinter die Teilaufgabe.
+
+\begin{multicols}{3}
+\begin{enumerate}
+\item $25 \oplus_{26} 25 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $0 \oplus_{26} 19 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $231 \oplus_{3} 222 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $\num{13874} \oplus_{2} 123 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $7 \oplus_{7} 21 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $25 \oplus_{8} 13 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $9 \oplus_{15} 12 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $13 \oplus_{12} 54 = \rule[-0.75mm]{1cm}{.5pt}$
+\item $\num{1378} \oplus_{10} \num{24795} = \rule[-0.75mm]{0.7cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\item Beantworten Sie die folgenden Fragen mit einer passenden modularen Addition.
+
+\begin{enumerate}
+	\item Es ist 09:00 Uhr. Wie spät ist es nach \num{100} Stunden?
+	
+	\fillwithgrid{0.5in}
+	
+	\item Heute ist Montag/Dienstag/Mittwoch/Donnerstag/Freitag/Samstag/Sonntag. Welchen Wochentag haben wir in \num{53} Tagen?
+	
+	\fillwithgrid{0.5in}
+\end{enumerate}
+
+\end{enumerate}
+
+\section{Modulare Subtraktion}
+
+Bei der Subtraktion kann es vorkommen, dass wir eine negative Zahl erhalten. In der modularen Arithmetik werden in der Regel \textbf{keine negativen Zahlen} benutzt. Wenn wir mit $\bmod a$ rechnen, dann erhalten wir immer natürliche Zahlen aus dem Bereich $0, 1, 2, \dots, a-2, a-1$. Dies gilt auch für die modulare Addition. Wir müssen die Subtraktion also so definieren, dass beim Subtrahieren nur Zahlen aus $\mathbb{Z}_a$ entstehen.
+
+\subsection{Kochrezept für die modulare Subtraktion}
+
+Wir führen die modulare Subtraktion $x \ominus_a y$ wie folgt durch: 
+
+\begin{enumerate}
+\item Subtrahiere zunächst $x$ und $y$ ohne modulare Berechnungen: $z = x - y$.
+\item Falls $z$ \textbf{positiv} ist, dann berechne $z \bmod a$. Dies ist dann das Ergebnis von $x \ominus_a y$.
+\item Sonst ($z$ ist \textbf{negativ}) addiere so oft $a$ zu $z$, bis die Zahl erstmalig \textbf{nicht negativ} ist.
+\end{enumerate}
+
+Wir berechnen nun drei Beispiele.
+
+\begin{example}
+Sei $x = 21$, $y = 10$ und $a = 5$. Wir berechnen $21 \ominus_{5} 10$ wie folgt: 
+\begin{itemize}
+\item $z = x - y = 21 - 10 = 11$
+\item Da $z = 11$ positiv ist, können wir direkt $z \bmod a$ berechnen. Wir erhalten $11 \bmod 5 = 1$.
+\end{itemize}
+Somit gilt: $21 \ominus_{5} 10 = 1$.
+\end{example}
+
+\begin{example}
+Sei $x = 15$, $y = 17$ und $a = 26$. Wir berechnen $15 \ominus_{26} 17$ wie folgt:
+\begin{itemize}
+\item $z = x - y = 15 - 17 = -2$
+\item Da $z = -2$ negativ ist, müssen wir $a = 26$ zu $z = -2$ addieren. Wir erhalten $z + a = -2 + 26 = 24$. Die Zahl ist nicht negativ und wir haben das korrekte Ergebnis berechnet.
+\end{itemize}
+Somit gilt: $15 \ominus_{5} 17 = 24$.
+\end{example}
+
+\begin{example}
+Sei $x = 3$, $y = 50$ und $a = 26$. Wir berechnen $3 \ominus_{26} 50$ wie folgt: 
+\begin{itemize}
+\item $z = x - y = 3 - 50 = -47$
+\item Da $z = -47$ negativ ist, müssen wir $a = 26$ zu $z = -47$ addieren. Wir erhalten $z + a = -47 + 26 = -21$. Die Zahl ist noch immer negativ.
+\item Wir addieren erneut $a = 26$ und erhalten $-21 + 26 = 5$. Die Zahl ist nicht negativ und wir haben das korrekte Ergebnis berechnet.
+\end{itemize}
+Somit gilt: $3 \ominus_{26} 50 = 5$.
+\end{example}
+
+\subsection{Aufgaben}
+
+Schreiben Sie das Ergebnis der folgenden Berechnungen direkt hinter die Teilaufgabe. Sie können unten Nebenrechnungen durchführen.
+
+\begin{multicols}{2}
+\begin{enumerate}
+\item $25 \ominus_{26} 25 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $0 \ominus_{26} 19 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $231 \ominus_{3} 222 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $\num{1378} \ominus_{10} \num{24795} = \rule[-0.75mm]{2cm}{.5pt}$
+\item $\num{13874} \ominus_{2} 123 = \rule[-0.75mm]{2cm}{.5pt}$
+\item $7 \ominus_{7} 21 = \rule[-0.75mm]{2cm}{.5pt}$
+\end{enumerate}
+\end{multicols}
+
+\fillwithgrid	{\stretch{1}}

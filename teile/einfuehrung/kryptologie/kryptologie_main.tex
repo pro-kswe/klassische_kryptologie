@@ -1,0 +1,93 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{how_hacking_works_2x}
+\chapterimagetitle{\uppercase{How hacking works}}
+\chapterimageurl{https://xkcd.com/2176/}
+\chapterimagehover{If only somebody had warned them that the world would roll them like this.}
+
+\chapter{Kryptologie}
+\label{chapter-kryptologie}
+
+Viele aktuelle Forschungsergebnisse aus der Kryptologie\footnote{krypto: geheim, versteck, verschlüsselt und logie: Lehre, Wissenschaft} werden direkt dazu benutzt, um den elektronischen Datenverkehr sicher zu gestalten. Zahlreiche Internetanwendungen (E-Banking, E-Commerce, Messaging etc.) sind nur durch moderne Kryptologie möglich. Die Lernziele lauten:
+
+\newcommand{\kryptologieLernziele}{
+\protect\begin{todolist}
+\item Sie erklären, was wir unter Kryptologie verstehen und gehen dabei auf die Kryptographie und Kryptoanalyse ein.
+\item Sie skizzieren das Kommunikationsszenario mit den passenden Fachbegriffen.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-kryptologie}, \nameref{chapter-kryptologie}}{\protect\kryptologieLernziele}
+
+\kryptologieLernziele
+
+\section{Kryptographie und Kryptoanalyse}
+
+Die Kryptologie teilen wir in zwei Teilbereiche auf. Die Entwicklung von Verfahren zur Verheimlichung von Nachrichten nennen wir \textbf{Kryptographie}. Wenn wir eine Methode entwickeln, mit der wir ein Verfahren unsicher machen, dann sagen wir, dass wir das Verfahren gebrochen haben. Die \textbf{Kryptoanalyse} ist die Kunst, Verfahren zur Verheimlichung zu brechen\footnote{Umgangssprachlich auch \say{knacken} genannt.}.
+
+\section{Kommunikationsszenario}
+
+Alle nachfolgenden Überlegungen basieren auf dem Kommunikationsschritt aus \autoref{figure-kommunikationsszenario-1}.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\node (sender) at (-6, 1.5) {Sender (Alice)}; 
+\node[inner sep=0pt] (alice) at (-6,0)
+    {\includegraphics[scale=0.15]{alice_small}};
+\node [cloud, draw, cloud puffs=10, cloud puff arc=120, aspect=2.5, text width=4cm, align=center] (medium) at (0,0) {Übertragungsmedium (Bote, Internet etc.)};
+\node (empfaenger) at (6, 1.5) {Empfänger (Bob)}; 
+\node[inner sep=0pt] (bob) at (6,0)
+    {\includegraphics[scale=0.15]{bob_small}};
+\draw[-latex, very thick] (alice.east) -- (medium.west) node[above, midway] {Nachricht};
+\draw[-latex, very thick] (medium.east) -- (bob.west) node[above, midway] {Nachricht};
+\end{tikzpicture}
+\caption{Grundlegendes Kommunikationsszenario (idealisierte Welt).}
+\label{figure-kommunikationsszenario-1}
+\end{figure}
+
+Zwei Personen möchten miteinander kommunizieren. Der Sender (Alice) möchte eine vertrauliche Nachricht an den Empfänger (Bob) schicken\footnote{Die Namen sind nicht beliebig: Sender A schickt eine Nachricht an Empfänger B}. Die Nachricht ist in einer Sprache verfasst, welche beide verstehen. Die Rollen des Senders und Empfängers sind pro Nachrichtenversand fix, können aber danach auch getauscht werden. Fortan verwenden wir für die Kommunikationsteilnehmer die Namen Alice und Bob, da dies in der Kryptologie so üblich ist. 
+
+Da Alice eine \textbf{vertrauliche Nachricht} an Bob schicken möchte, wollen beide verhindern, dass eine andere Person den Inhalt der Nachricht lesen kann. Beim Übertragen der Nachricht müssen beide immer damit rechnen, dass eine dritte Person die Nachricht abfangen kann. Wir erweitern das Kommunikationsszenario um eine weitere Person, wie in \autoref{figure-kommunikationsszenario-2} gezeigt.
+
+\begin{figure}[htb]
+\centering
+\begin{tikzpicture}
+\node (sender) at (-6, 1.5) {Sender (Alice)}; 
+\node[inner sep=0pt] (alice) at (-6,0)
+    {\includegraphics[scale=0.15]{alice_small}};
+\node [cloud, draw, cloud puffs=10, cloud puff arc=120, aspect=2, text width=4cm, align=center] (medium) at (0,0) {Übertragungsmedium (Bote, Internet etc.)};
+\node (empfaenger) at (6, 1.5) {Empfänger (Bob)}; 
+\node[inner sep=0pt] (bob) at (6,0)
+    {\includegraphics[scale=0.15]{bob_small}};
+\node (pangreifer) at (0, -3.5) {Passiver Angreifer (Eve)}; 
+\node[inner sep=0pt] (eve) at (0,-5)
+    {\includegraphics[scale=0.15]{eve_small}};
+\draw[-latex, very thick] (alice.east) -- (medium.west) node[above, midway] {Nachricht};
+\draw[-latex, very thick] (medium.east) -- (bob.west) node[above, midway] {Nachricht};
+\draw[-latex, very thick] (medium.south) -- (pangreifer.north) node[right, midway] {Kopie der Nachricht};
+\end{tikzpicture}
+\caption{Grundlegendes Kommunikationsszenario.}
+\label{figure-kommunikationsszenario-2}
+\end{figure}
+
+Beim Versenden der Nachricht, kann ein \textbf{passiver Angreifer} (Eve)\footnote{Der passive Angreifer ist \say{nur} ein Lauscher (eng. eavesdropper)} bei der Übertragung \say{mithören}. Eve greift nicht in das Kommunikationsgeschehen ein. Wir können uns dies so vorstellen, dass Eve jede Nachricht, die von Alice an Bob geschickt wird, als Kopie erhält.
+
+\begin{example}[Risiken bei der Übertragung]
+Wird die Nachricht als Brief übermittelt, dann kann der Bote unzuverlässig sein und den Brief öffnen und lesen. Bei einer elektronischen Nachricht (z.B. eine E-Mail via \ac{WLAN}) können die Daten abgefangen und ausgewertet werden.
+\end{example}
+
+\subsection{Prinzip der Kryptographie}
+
+Alice und Bob müssen also Massnahmen ergreifen, sodass keine weitere Person den Inhalt der Nachricht erfahren kann. Alice könnte die Nachricht so umwandeln, dass keiner mehr die Nachricht versteht - aber dies ist nicht brauchbar, da Bob dann damit auch nichts mehr anfangen kann.
+
+\begin{important}
+Die Herausforderung besteht darin, die Nachricht so zu transformieren, dass \textbf{nur} Alice und Bob den Inhalt der Nachricht lesen können und sonst niemand. Dies gelingt nur, wenn Alice und Bob einen \textbf{Wissensvorsprung} gegenüber Eve besitzen.
+\end{important}
+
+\subsection{Ist Eve \protect\say{böse}?}
+
+
+ Menschen, die Verfahren zur Verheimlichung brechen, heissen \textbf{Kryptoanalytiker}. Oft wird ein Kryptoanalytiker umgangssprachlich auch als Angreifer bezeichnet. Wir dürfen diese Personen aber nicht allgemein als Hacker mit bösen Absichten bezeichnen. Eve nimmt somit die Rolle der Kryptoanalytikerin ein und versucht den Inhalt der Nachricht von Alice an Bob zu ermitteln.

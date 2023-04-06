@@ -1,0 +1,361 @@
+% !TEX root = ../../../main.tex
+
+\toggletrue{image}
+\toggletrue{imagehover}
+\chapterimage{iso_paper_size_golden_spiral}
+\chapterimagetitle{\uppercase{ISO Paper Size Golden Spiral}}
+\chapterimageurl{https://xkcd.com/2322/}
+\chapterimagehover{The ISO 216 standard ratio is cos(45\textdegree), but American letter paper is 8.5x11 because it uses radians, and 8.5/11 = pi/4.}
+
+% TODO add to bib: RSA and public-key cryptography / Richard A. Mollin. p. cm. — (Discrete mathematics and its applicatoins) Includes bibliographical references and index. ISBN 1-58488-338-3
+
+\chapter{Schlüsselverteilung mit \texttt{VIGENÈRE}}
+\label{chapter-schluesselverteilung-vigenere}
+
+Wir zeigen nun, wie wir mit dem Kryptosystem \texttt{VIGENÈRE} die Schlüsselverteilung digitalisieren können. Anschliessend zeigen wir, dass dieses Protokoll nicht sicher ist. Die Lernziele lauten:
+
+\newcommand{\schluesselverteilungVigenereLernziele}{
+\protect\begin{todolist}
+\item Sie führen die digitale Schlüsselverteilung mit \texttt{VIGENÈRE} etc. durch.
+\item Sie führen die Kryptoanalyse für die Schlüsselverteilung mit \texttt{VIGENÈRE} etc. durch.
+\end{todolist}
+}
+
+\lernziel{\autoref{chapter-schluesselverteilung-vigenere}, \nameref{chapter-schluesselverteilung-vigenere}}{\protect\schluesselverteilungVigenereLernziele}
+
+\schluesselverteilungVigenereLernziele
+
+\section{Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE}}
+
+\begin{example}
+Mit \textbf{$\text{key}_C$ (common key)} ist der \textbf{gemeinsame Schlüssel} von Alice und Bob gemeint. Die Schlüssel \textbf{$\text{key}_A$} und \textbf{$\text{key}_B$} sind jeweils die Schlüssel von \textbf{Alice} und \textbf{Bob}. Mit \textbf{$\text{msg}$} kürzen wir die \textbf{Nachrichten} zwischen Alice und Bob ab. Mit \textbf{$enc$} ist die \textbf{Verschlüsselung} (eng. encryption) gemeint und mit \textbf{$dec$} die \textbf{Entschlüsselung} (eng. decryption).
+
+\begin{figure}[htb]
+\begin{tikzpicture}
+\node[inner sep=0pt] (eve) at (0,0) {\includegraphics[scale=0.25]{eve_tiny}};
+\node[text width=2cm, align=center] (pangreifer) at (0, 1) {Eve};
+\node[inner sep=0pt] (alice) at (-5,0) {\includegraphics[scale=0.25]{alice_tiny}};
+\node[text width=2cm, align=center] (sender) at (-5, 1) {Alice};
+\node[inner sep=0pt] (bob) at (4,0) {\includegraphics[scale=0.25]{bob_tiny}};
+\node[text width=2cm, align=center] (empfaenger) at (4, 1) {Bob};
+
+\node[text width=1cm, align=center, fill=black!25] (step1) at (-7, -1) {\Huge 1};
+\node[text width=3cm, anchor=west] (step1ActionAlice) at (-6, -1) {$\text{key}_C = \text{BAUM}$ \\ $\text{key}_A = \text{AUTO}$};
+\node[text width=3cm, anchor=west] (step1ActionBob) at (3, -1) {$\text{key}_B = \text{BOOT}$};
+
+
+\node[text width=1cm, align=center, fill=black!25] (step2) at (-7, -2) {\Huge 2};
+\node[text width=3cm, anchor=west] (step2ActionAlice) at (-6, -2.5) {%
+$\begin{aligned}
+     \text{msg}_1 & = enc(\text{key}_C, \text{key}_A) \\ 
+     &= enc(\text{BAUM}, \text{AUTO}) \\ 
+     &= \text{BUNA}
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step3) at (-7, -4) {\Huge 3};
+\node[text width=2cm, anchor=west] (step3ActionBob) at (3, -4) {%
+$\begin{aligned}
+     \text{msg}_2 & = enc(\text{msg}_1, \text{key}_B) \\ 
+     &= enc(\text{BUNA}, \text{BOOT}) \\
+     &= \text{CIBT}
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step4) at (-7, -5) {\Huge 4};
+\node[text width=3cm, anchor=west] (step4ActionAlice) at (-6, -5.5) {%
+$\begin{aligned}
+     \text{msg}_3 & = dec(\text{msg}_2, \text{key}_A) \\ 
+     &= dec(\text{CIBT}, \text{AUTO}) \\ 
+     &= \text{COIF}
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step5) at (-7, -6.75) {\Huge 5};
+\node[text width=2cm, anchor=west] (step5ActionBob) at (3, -6.75) {%
+$\begin{aligned}
+     \text{key}_C & = dec(\text{msg}_3, \text{key}_B) \\ 
+     &= dec(\text{COIF}, \text{BOOT}) \\
+     &= \text{BAUM} 
+  \end{aligned}$
+};
+
+\draw[-latex, very thick] ([xshift=35pt, yshift=-15pt]step2ActionAlice.east) -- ([yshift=10pt]step3ActionBob.west) node[above, midway, sloped] {$\text{msg}_1 = \text{BUNA}$};
+\draw[-latex, very thick] (step3ActionBob.west) -- ([xshift=35pt]step4ActionAlice.east) node[above, midway, sloped] {$\text{msg}_2 = \text{CIBT}$};
+\draw[-latex, very thick] ([xshift=35pt, yshift=-10pt]step4ActionAlice.east) -- (step5ActionBob.west) node[above, midway, sloped] {$\text{msg}_3 = \text{COIF}$};
+
+\end{tikzpicture}
+\caption{Eve sieht nur die drei Nachrichten $\text{msg}_1$, $\text{msg}_2$ und $\text{msg}_3$.}
+\label{figure-schluesselverteilung-one-time-pad-example}
+\end{figure}
+\end{example}
+
+Wir können das Protokoll \texttt{SCHLÜSSELVERTEILUNG TRUHE} also digitalisieren. Das Protokoll funktioniert für beliebige Schlüssel. Mit dem gemeinsamen Schlüssel können beide dann wie gewohnt verschlüsselt kommunizieren.
+
+\begin{example}
+Alice verschlüsselt mit dem Schlüssel BAUM und schickt den Kryptotext BWDL FI KEXBDN JI MOIV GAYH an Bob. Dieser hat ebenfalls den Schlüssel BAUM und kann den Kryptotext wieder entschlüsseln und erhält den Klartext VIEL ZU LERNEN DU NOCH HAST.
+\end{example}
+
+\begin{important}
+Das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE} kann natürlich auch mit den Kryptosystemen \texttt{VIGENÈRE-ABSTRAKT} bzw. \texttt{VIGENÈRE-PLUS} durchgeführt werden. Wir müssen das Protokoll einfach an den passenden Stellen anpassen.
+\end{important}
+
+\subsection{Aufgaben}
+
+\begin{enumerate}
+	\item Führen Sie das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE} mit $\text{key}_A = \text{MONTAG}$, \\ $\text{key}_B = \text{FREITAG}$ und $\text{key}_C = \text{WOCHENENDE}$ durch.
+	
+	\fillwithgrid	{3in}
+	
+		
+	\item Führen Sie das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE-PLUS} mit \\ $\text{key}_A = \text{ZEXVJULR}$, $\text{key}_B = \text{UJHVRIVH}$ und $\text{key}_C = \text{GNUBJUTC}$ durch.
+	
+	\fillwithgrid	{\stretch{1}}
+	
+	\newpage
+	
+	\item Führen Sie das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE-ABSTRAKT} mit $\text{key}_A = \text{ROT}$, $\text{key}_B = \text{BLAU}$ und $\text{key}_C = \text{GELB}$ durch. Codieren Sie die Schlüssel und führen Sie dann die Berechnungen durch. Notieren Sie alle Schritte im Detail.
+	
+\begin{table}[htb]
+\centering
+\begin{tblr}{
+    colspec = {|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+}
+\hline
+A  & B  & C  & D  & E  & F  & G  & H  & I  & J  & K  & L  & M  \\ \hline
+0  & 1  & 2  & 3  & 4  & 5  & 6  & 7  & 8  & 9  & 10 & 11 & 12 \\ \hline[2pt]
+N  & O  & P  & Q  & R  & S  & T  & U  & V  & W  & X  & Y  & Z  \\ \hline
+13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 \\ \hline
+\end{tblr}
+\end{table}
+	
+	\fillwithgrid	{\stretch{1}}
+
+\newpage
+
+	\item Führen Sie das Protokoll \texttt{SCHLÜSSELVERTEILUNG CAESAR} durch. Die Schlüssel für Alice und Bob sind in \autoref{figure-schluesselverteilung-caesar} zu sehen. Der gemeinsame Schlüssel ($\text{key}_C$) soll SPINNEREI sein. Zeigen Sie alle Schritte des Protokolls im Detail.
+	
+	\begin{figure}[htb]
+	\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\resizebox{3cm}{!}{
+\Caesar{-8}{8}{off}{off}
+}
+\caption{$\text{key}_A = 8$}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\resizebox{3cm}{!}{
+\Caesar{-20}{20}{off}{off}
+}
+\caption{$\text{key}_B = 20$}
+\end{minipage}
+\caption{Die beiden Schlüssel von Alice und Bob.}
+\label{figure-schluesselverteilung-caesar}
+\end{figure}
+	
+	\fillwithgrid	{\stretch{1}}
+
+\newpage
+
+	\item Führen Sie das Protokoll \texttt{SCHLÜSSELVERTEILUNG CAESAR-ABSTRAKT} durch. Die Schlüssel für Alice und Bob sind in \autoref{table-schluesselverteilung-caesar-abstrakt} zu sehen. Der gemeinsame Schlüssel ($\text{key}_C$) soll LANGBAU sein. Zeigen Sie alle Schritte des Protokolls im Detail.
+	
+	\begin{table}[htb]
+\centering
+\caption{Die beiden Schlüssel von Alice und Bob.}
+\label{table-schluesselverteilung-caesar-abstrakt}
+\begin{tblr}{
+    colspec = {|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+}
+\hline
+Klartextbuchstabe & A & B & C & D & E & F & G & H & I & J & K & L & M \\ \hline
+Kryptotextbuchstabe & D & E & F & G & H & I & J & K & L & M & N & O & P  \\ \hline[2pt]
+Klartextbuchstabe & N & O & P & Q & R & S & T & U & V & W & X & Y & Z \\ \hline
+Kryptotextbuchstabe & Q & R & S & T & U & V & W & X & Y & Z & A & B & C  \\ \hline
+\end{tblr}
+\subcaption{$\text{key}_A = 3$}
+
+\begin{tblr}{
+    colspec = {|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+}
+\hline
+Klartextbuchstabe & A & B & C & D & E & F & G & H & I & J & K & L & M \\ \hline
+Kryptotextbuchstabe & N & O & P & Q & R & S & T & U & V & W & X & Y & Z  \\ \hline[2pt]
+Klartextbuchstabe & N & O & P & Q & R & S & T & U & V & W & X & Y & Z \\ \hline
+Kryptotextbuchstabe & A & B & C & D & E & F & G & H & I & J & K & L & M  \\ \hline
+\end{tblr}
+\subcaption{$\text{key}_B = 13$}
+\end{table}
+	
+		\fillwithgrid	{\stretch{1}}
+	
+\end{enumerate}
+
+\newpage
+
+\section{Kryptoanalyse}
+\label{subsec-schluesselverteilung-vigenere-kryptoanalyse}
+
+Wir haben nun gesehen, dass die Schlüsselverteilung funktioniert. Neben der Korrektheit eines Verfahrens, muss auch immer die Sicherheit geprüft werden. Deshalb lautet die Frage:
+
+\begin{center}
+	Ist das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE} sicher?
+\end{center}
+
+Dazu nehmen wir die Rolle von Eve ein und untersuchen an einem Beispiel, ob wir mit den Nachrichten $\text{msg}_1$, $\text{msg}_2$ und $\text{msg}_3$ etwas über die Schlüssel erfahren können. Gemäss dem Prinzip von Kerkhoff kennt Eve das Protokoll für die Schlüsselverteilung mit \texttt{VIGENÈRE}. Sie weiss also, wie die Nachrichten entstanden sind.
+
+\begin{example}
+Eve fängt die drei Nachrichten $\text{msg}_1$, $\text{msg}_2$ und $\text{msg}_3$ ab.
+
+\begin{table}[htb]
+\centering
+\begin{tblr}{
+    colspec = {|c|c|c|}
+}
+\hline
+Nachricht  & Entstehung & Inhalt  \\ \hline[2pt]
+$\text{msg}_1$ & $enc(\text{key}_C, \text{key}_A)$ & BGTXM \\ \hline
+$\text{msg}_2$ & $enc(\text{msg}_1, \text{key}_B)$ & DUEXO \\ \hline
+$\text{msg}_3$ & $dec(\text{msg}_2, \text{key}_A)$ & CDQEN \\ \hline
+\end{tblr}
+\end{table}
+
+Eve weiss, dass die Nachricht $\text{msg}_2$ durch die \textbf{Verschlüsselung} der Nachricht $\text{msg}_1$ entstanden ist. $\text{msg}_1$  ist also der \textbf{Klartext} und $\text{msg}_2$ der \textbf{Kryptotext}. Eve kann also einfach im \textbf{Vigenère-Quadrat} die passenden Buchstaben suchen, sodass aus $\text{msg}_1$ die Nachricht $\text{msg}_2$ entsteht.
+
+\begin{table}[htb]
+\centering
+\begin{tblr}{
+    colspec = {|c|c|c|c|c|c|}
+}
+\hline
+Klartext: $\text{msg}_1$ & B & G & T & X & M \\ \hline
+Schlüssel: $\text{key}_B$ & C & O & L & A & C \\ \hline
+Kryptotext: $\text{msg}_2$ & D & U & E & X & O \\ \hline
+\end{tblr}
+\end{table}
+
+Nun hat Eve leichtes Spiel. Sie kann $\text{key}_C$ bestimmen, in dem Sie mit $\text{key}_B$ die Nachricht $\text{msg}_1$  entschlüsselt. Mit $dec(\text{msg}_1, \text{key}_A) = dec(\text{BGTXM}, \text{COLA}) = \text{APFEL}$ haben wir das Protokoll somit geknackt.
+\end{example}
+
+Das Beispiel zeigt, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE} nicht sicher ist. Wir müssen die Schlüsselverteilung also anders durchführen. Leider geht es mit \textbf{keinem} der \textbf{bisher vorgestellten Kryptosysteme} (siehe nachfolgende Aufgaben). Wir brauchen ein anderes mathematisches Konzept für die sichere Umsetzung.
+
+\subsection{Aufgaben}
+
+\begin{enumerate}
+	\item Eve erhält $\text{msg}_1 = \text{JSWVEDQO}$, $\text{msg}_2 = \text{LVNZMSEQ}$ und $\text{msg}_3 = \text{UWRVEPFU}$. Eve weiss, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE} benutzt wurde. Bestimmen Sie $\text{key}_A$, $\text{key}_B$ und $\text{key}_C$.
+
+	% key_A = RZWEIDZWEI
+	% key_B = CDREIPO
+	% key_C = STARWARS
+
+	\fillwithgrid{2in}
+
+	\item Eve erhält $\text{msg}_1 = \text{CFRVIT}$, $\text{msg}_2 = \text{OPCYBG}$ und $\text{msg}_3 = \text{JUZZAO}$. Eve weiss, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE-PLUS} benutzt wurde. Bestimmen Sie $\text{key}_A$, $\text{key}_B$ und $\text{key}_C$.
+
+	% key_A = FVDZBS
+	% key_B = MKLDTN
+	% key_C = XKOWHB
+	
+	\fillwithgrid{2in}
+
+	\item  Eve erhält die drei Nachrichten $\text{msg}_1 = 14~14~23~9~10~11~0~20~21$, $\text{msg}_2 = 5~2~10~0~24~24~17~8~8$ und $\text{msg}_3 = 24~2~19~9~0~17~17~17~17$. Eve weiss, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG VIGENÈRE-ABSTRAKT} benutzt wurde. Bestimmen Sie $\text{key}_A$, $\text{key}_B$ und $\text{key}_C$ allein mithilfe von \textbf{modularer Arithmetik}. Decodieren Sie erst dann die Schlüssel.
+
+	% key_A = HARRY
+	% => 7 0 17 17 24
+	% key_B = RON
+	% => 17 14 13
+	% key_C = HOGSMEADE
+	% => 7 14 6 18 12 4 0 3 4
+	% msg_1 = OOXJKLAUV
+	% => 14 14 23 9 10 11 0 20 21
+	% msg_2 = FCKAYYRII
+	% => 5 2 10 0 24 24 17 8 8
+	% msg_3 = YCTJARRRR
+	% => 24 2 19 9 0 17 17 17 17
+	
+	% Lsg: (((msg_1 - msg_2) mod 26) + msg_3) mod 26
+	
+	\fillwithgrid{3in}
+	
+	\item  Eve erhält die drei Nachrichten $\text{msg}_1 = \text{WJAWRJ}$, $\text{msg}_2 = \text{REVRME}$ und $\text{msg}_3 = \text{IVMIDV}$. Eve weiss, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG CAESAR} benutzt wurde. Bestimmen Sie $\text{key}_A$, $\text{key}_B$ und $\text{key}_C$.
+	
+	% key_A = 9 (A -> J)
+	% key_B = 21 (A -> V)
+	% key_C = NARNIA
+	
+	\fillwithgrid{\stretch{1}}
+
+\newpage
+
+\item  Eve erhält die drei Nachrichten $\text{msg}_1 = 10101110$, $\text{msg}_2 = 11101011$ und $\text{msg}_3 = 10111100$. Eve weiss, dass das Protokoll \texttt{SCHLÜSSELVERTEILUNG ONE-TIME-PAD} benutzt wurde. Bestimmen Sie $\text{key}_A$, $\text{key}_B$ und $\text{key}_C$ allein mithilfe von \textbf{modularer Arithmetik}.
+	
+	% key_A = 01010111 (W)
+	% key_B = 01000101 (E)
+	% key_C = 11111001
+	
+	\fillwithgrid{3in}
+	
+	\item Alice und Bob einigen sich auf ein neues Verfahren. Sie verwenden die Multiplikation und Division mit natürlichen Zahlen. \autoref{figure-schluesselverteilung-multi-div-example} zeigt ein Beispiel. Wie kann Eve den gemeinsamen Schlüssel ermitteln?
+
+\begin{figure}[htb]
+\begin{tikzpicture}
+\node[inner sep=0pt] (eve) at (0,0) {\includegraphics[scale=0.25]{eve_tiny}};
+\node[text width=2cm, align=center] (pangreifer) at (0, 1) {Eve};
+\node[inner sep=0pt] (alice) at (-5,0) {\includegraphics[scale=0.25]{alice_tiny}};
+\node[text width=2cm, align=center] (sender) at (-5, 1) {Alice};
+\node[inner sep=0pt] (bob) at (4,0) {\includegraphics[scale=0.25]{bob_tiny}};
+\node[text width=2cm, align=center] (empfaenger) at (4, 1) {Bob};
+
+\node[text width=1cm, align=center, fill=black!25] (step1) at (-7, -1) {\Huge 1};
+\node[text width=1.75cm, anchor=west] (step1ActionAlice) at (-6, -1) {$\text{key}_C = 21$ \\ $\text{key}_A = 3$};
+\node[text width=2cm, anchor=west] (step1ActionBob) at (3, -1) {$\text{key}_B = 5$};
+
+
+\node[text width=1cm, align=center, fill=black!25] (step2) at (-7, -2) {\Huge 2};
+\node[text width=1.75cm, anchor=west] (step2ActionAlice) at (-6, -2) {%
+$\begin{aligned}
+     \text{msg}_1 & = \text{key}_C \cdot \text{key}_A \\ 
+     &= 21 \cdot 3 = 63
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step3) at (-7, -3) {\Huge 3};
+\node[text width=2cm, anchor=west] (step3ActionBob) at (3, -3) {%
+$\begin{aligned}
+     \text{msg}_2 & = \text{msg}_1 \cdot \text{key}_B \\ 
+     &= 63 \cdot 5 = 315
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step4) at (-7, -4) {\Huge 4};
+\node[text width=1.75cm, anchor=west] (step4ActionAlice) at (-6, -4) {%
+$\begin{aligned}
+     \text{msg}_3 & = \text{msg}_2 \div \text{key}_A \\ 
+     &= 315 \div 3 = 105
+  \end{aligned}$
+};
+
+\node[text width=1cm, align=center, fill=black!25] (step5) at (-7, -5) {\Huge 5};
+\node[text width=2cm, anchor=west] (step5ActionBob) at (3, -5) {%
+$\begin{aligned}
+     \text{key}_C & = \text{msg}_3 \div \text{key}_B \\ 
+     &= 105 \div 5 = 21
+  \end{aligned}$
+};
+
+\draw[-latex, very thick] ([xshift=40pt]step2ActionAlice.east) -- ([yshift=10pt]step3ActionBob.west) node[above, midway, sloped] {$\text{msg}_1 = 63$};
+\draw[-latex, very thick] (step3ActionBob.west) -- ([xshift=50pt]step4ActionAlice.east) node[above, midway, sloped] {$\text{msg}_2 = 315$};
+\draw[-latex, very thick] ([xshift=50pt, yshift=-10pt]step4ActionAlice.east) -- (step5ActionBob.west) node[above, midway, sloped] {$\text{msg}_3 = 105$};
+
+\end{tikzpicture}
+\caption{Eve sieht nur die drei Nachrichten $\text{msg}_1$, $\text{msg}_2$ und $\text{msg}_3$.}
+\label{figure-schluesselverteilung-multi-div-example}
+\end{figure}
+
+% Lsg: msg_2 div msg_1 und msg_2 div msg_3, dann Ergebnisse multiplizieren
+
+\fillwithgrid{\stretch{1}}
+
+\end{enumerate}
