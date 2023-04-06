@@ -2,7 +2,7 @@
 
 Skript zum Thema Klassische Kryptologie
 
-## TODO
+## TODOs
 
 - [ ] Aufgaben zu Übungen umschreiben mit Lösungen (xsim Package benutzen).
 - [ ] Class und Configuration mit Änderungen aus dem Digitaltechnikskript abgleichen.
