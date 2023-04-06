@@ -1,4 +1,4 @@
-# Klassisches Kryptologie
+# Klassische Kryptologie
 
 Skript zum Thema Klassische Kryptologie
 
