@@ -10,3 +10,7 @@ Skript zum Thema Klassische Kryptologie
 - [ ] Arbeitsblätter in ein separates Kapitel (Vigenere und Schlüsselverteilung mit Vigenere).
 - [ ] Transparente Bilder umwandeln in Bilder mit weissem Hintergrund wegen Druck.
 - [ ] Nach dem Druck und dem Lösen der Aufgaben: Platz für die Antworten (Gridgrösse) optimieren.
+
+## Typos
+
+- [ ]  "Nun hat Eve leichtes Spiel..." verwendet falsche Nachrichten. Abschnitt über Schlüsselverteilung mit VIGENERE.
